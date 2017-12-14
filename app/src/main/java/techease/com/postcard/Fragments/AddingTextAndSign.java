@@ -36,8 +36,9 @@ public class AddingTextAndSign extends Fragment {
         imageView=(ImageView)view.findViewById(R.id.ivAddingText);
         editTextLOngText=(EditText)view.findViewById(R.id.editText);
         typeface=Typeface.createFromAsset(getActivity().getAssets(),"SanFrancisco.otf");
+
         SharedPreferences myPrefrence = getActivity().getPreferences(MODE_PRIVATE);
-        image=myPrefrence.getString("imagePrefrence","");
+        image=myPrefrence.getString("imagePreferance","");
         Bitmap bitmap;
         if(!image.equals(""))
         {

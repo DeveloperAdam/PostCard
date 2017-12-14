@@ -5,7 +5,6 @@ import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -131,11 +130,6 @@ public class CaptureImageFrag extends Fragment {
                 }
                 try {
                     Bitmap bitmap;
-//                    InputStream inputStream;        //for saving image in sharedprefrence
-//                    inputStream=getActivity().getContentResolver().openInputStream(data.getData());
-//                    Bitmap realImage=BitmapFactory.decodeStream(inputStream);
-//                    editor.putString("imageprefrence",encodeToBase64(realImage));
-//                    editor.commit();
                     BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
 
 
@@ -153,8 +147,7 @@ public class CaptureImageFrag extends Fragment {
                     File file = new File(path, String.valueOf(System.currentTimeMillis()) + ".jpg");
                     outFile = new FileOutputStream(file);
 
-
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 85, outFile);
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 85, outFile);
 
                     outFile.flush();
 
@@ -172,17 +165,17 @@ public class CaptureImageFrag extends Fragment {
                     stream = getActivity().getContentResolver().openInputStream(data.getData());
                     Bitmap realImage = BitmapFactory.decodeStream(stream);
                     imageView.setImageBitmap(realImage);
-
-                    Uri selectImageUri=data.getData();
-                    String[] filePathColum={MediaStore.Images.Media.DATA};
-                    Cursor cursor =getActivity(). getContentResolver().query(selectImageUri,filePathColum, null, null, null);
-                    cursor.moveToFirst();
-                    int columnIndex = cursor.getColumnIndex(filePathColum[0]);
-                    String picturePath = cursor.getString(columnIndex);
-                    cursor.close();
-                    Bitmap bmp = BitmapFactory.decodeFile(picturePath);
-                    ByteArrayOutputStream streams = new ByteArrayOutputStream();
-                    bmp.compress(Bitmap.CompressFormat.PNG, 100, streams);
+//
+//                    Uri selectImageUri=data.getData();
+//                    String[] filePathColum={MediaStore.Images.Media.DATA};
+//                    Cursor cursor =getActivity(). getContentResolver().query(selectImageUri,filePathColum, null, null, null);
+//                    cursor.moveToFirst();
+//                    int columnIndex = cursor.getColumnIndex(filePathColum[0]);
+//                    String picturePath = cursor.getString(columnIndex);
+//                    cursor.close();
+//                    Bitmap bmp = BitmapFactory.decodeFile(picturePath);
+//                    ByteArrayOutputStream streams = new ByteArrayOutputStream();
+//                    bmp.compress(Bitmap.CompressFormat.PNG, 100, streams);
 
                     SharedPreferences myPrefrence = getActivity().getPreferences(MODE_PRIVATE);
                     SharedPreferences.Editor editor = myPrefrence.edit();

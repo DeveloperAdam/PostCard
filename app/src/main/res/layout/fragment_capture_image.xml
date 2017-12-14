@@ -14,6 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="300sp"
             android:id="@+id/iv"
+            android:scaleType="fitXY"
           android:background="#eee" />
             <TextView
                 android:id="@+id/tvNext"
