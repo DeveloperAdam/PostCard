@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
 
+import techease.com.postcard.Fragments.CaptureImageFrag;
 import techease.com.postcard.Fragments.EmailLoginFrag;
 import techease.com.postcard.R;
 
@@ -87,8 +88,20 @@ public class FullscreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_fullscreen);
 //        Uncomment this two lines to open fragment for saving services in database
         // you can move that code to the service activity too
-        Fragment fragment = new EmailLoginFrag();
-        getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+        Intent intent=getIntent();
+        String token=intent.getStringExtra("token");
+        if (token.equals(""))
+        {
+            Fragment fragment = new EmailLoginFrag();
+            getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+        }
+        else
+        {
+
+            Fragment fragment=new CaptureImageFrag();
+            getFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
+        }
+
 // uncomment the below line and comment the above lines and run
 //        startActivity(new Intent(FullscreenActivity.this, ServiceActivity.class));
         mVisible = true;

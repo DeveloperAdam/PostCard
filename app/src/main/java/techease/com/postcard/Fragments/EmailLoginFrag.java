@@ -1,6 +1,8 @@
 package techease.com.postcard.Fragments;
 
 import android.app.Fragment;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,6 +37,8 @@ public class EmailLoginFrag extends Fragment {
     Button btnLogin;
     Typeface typeface,typeface2;
     String strUserNameEmail,strPass;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -50,6 +54,8 @@ public class EmailLoginFrag extends Fragment {
         etUsernameEmail=(EditText)view.findViewById(R.id.etUsernameEmail);
         etPassword=(EditText)view.findViewById(R.id.etPasswordLogin);
         btnLogin=(Button)view.findViewById(R.id.btnLogin);
+        sharedPreferences = getActivity().getSharedPreferences("com.postcard", Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
 
         //Applying font
         tvTitle.setTypeface(typeface);
@@ -104,7 +110,9 @@ public class EmailLoginFrag extends Fragment {
             public void onResponse(String response) {
                 Log.d("zma respoonse", response);
                 //  DialogUtils.sweetAlertDialog.dismiss();
-
+                String localToken="abc123";
+                editor.putString("token",localToken);
+                editor.commit();
                 Fragment fragment=new CaptureImageFrag();
                 getActivity().getFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
             }
