@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 import techease.com.postcard.R;
 
@@ -20,6 +22,9 @@ public class Login extends AppCompatActivity {
     Typeface typeface;
     Button btnEmail,Fb;
     LoginButton Fbloginbtn;
+    GoogleSignInOptions gso;
+    private static final int RC_SIGN_IN = 9001;
+    private GoogleApiClient mGoogleApiClient;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,9 +34,26 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         //Declaration
+//     gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
+//        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+//        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+//        updateUI(account);
         textView=(TextView)findViewById(R.id.tvpostcard);
         typeface=Typeface.createFromAsset(getAssets(),"billabong.ttf");
         btnEmail=(Button)findViewById(R.id.btnContinueWithEmail);
+//        SignInButton signInButton = findViewById(R.id.sign_in_button);
+//        signInButton.setSize(SignInButton.SIZE_STANDARD);
+//        signInButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                switch (v.getId()) {
+//                    case R.id.sign_in_button:
+//                        signIn();
+//                        break;
+//                    // ...
+//                }
+//            }
+//        });
         //Fbloginbtn=(LoginButton)findViewById(R.id.btnFBLogin);
         Fb=(Button)findViewById(R.id.btnFbLogin);
         Fb.setOnClickListener(new View.OnClickListener() {
@@ -58,4 +80,9 @@ public class Login extends AppCompatActivity {
 
 
     }
+
+//    private void signIn() {
+//        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+//        startActivityForResult(signInIntent, RC_SIGN_IN);
+//    }
 }

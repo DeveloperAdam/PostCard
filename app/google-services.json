@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "783868330440",
+    "project_id": "postcard-189008"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:783868330440:android:2b5305b74b8a89b6",
+        "android_client_info": {
+          "package_name": "techease.com.postcard"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "783868330440-8bgk2a2ubupvh111m7djc3hg4fhtmumq.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "783868330440-pftmpd7d9dgobdn2rc1lgtfjqtdo5ha7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "techease.com.postcard",
+            "certificate_hash": "e8394e6713a0d308a5c8fa5d219774a15b9e22e2"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDf4HoRUPYyzqEZ-4ijObme_dfw9UCJBLI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

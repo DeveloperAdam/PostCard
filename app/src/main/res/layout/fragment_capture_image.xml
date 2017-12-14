@@ -7,13 +7,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="300sp"
             android:id="@+id/iv"
-          android:background="#eee"
-            />
-
+          android:background="#eee" />
+            <TextView
+                android:id="@+id/tvNext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Next"
+                android:layout_gravity="right"
+                android:layout_margin="20sp"
+                android:textSize="20sp"
+                android:textColor="#fff"
+                android:textStyle="bold"/>
+        </FrameLayout>
         <Button
             android:id="@+id/btnPicChooser"
             android:layout_width="50sp"
