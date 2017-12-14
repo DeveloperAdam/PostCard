@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/back"
+    tools:context="techease.com.postcard.Activities.Login">
+
+    <TextView
+        android:id="@+id/tvpostcard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="POSTCARD"
+        android:layout_marginTop="100sp"
+        android:textColor="#fff"
+        android:textSize="25sp" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <!--<com.facebook.login.widget.LoginButton-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:id="@+id/btnFBLogin"-->
+            <!--android:visibility="gone"/>-->
+
+    <Button
+        android:id="@+id/btnFbLogin"
+        android:layout_width="match_parent"
+        android:layout_marginTop="50sp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/customfbbtn"
+       android:layout_marginRight="20sp"
+        android:text="Facebook"
+        android:textColor="#fff"
+        android:textSize="15sp"
+        android:layout_marginLeft="20sp"
+        />
+    </FrameLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:background="@drawable/googlebutton"
+        android:text="Continue with Google"
+        android:textColor="#fff"
+        android:layout_margin="20sp"
+        android:id="@+id/button2" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="OR"
+        android:textSize="20sp"
+        android:textColor="#fff"
+        android:layout_gravity="center"
+        android:textStyle="bold"/>
+<Button
+    android:id="@+id/btnContinueWithEmail"
+    android:layout_width="match_parent"
+    android:layout_height="50sp"
+    android:text="Continue with Email"
+    android:textColor="#fff"
+    android:layout_margin="20sp"
+    android:background="@drawable/emailbutton"
+    />
+</LinearLayout>
