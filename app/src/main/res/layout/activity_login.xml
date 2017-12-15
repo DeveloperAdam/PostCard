@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:id="@+id/loginContainer"
     android:background="@drawable/back"
     tools:context="techease.com.postcard.Activities.Login">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
     <TextView
         android:id="@+id/tvpostcard"
         android:layout_width="wrap_content"
@@ -20,11 +24,13 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <!--<com.facebook.login.widget.LoginButton-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:id="@+id/btnFBLogin"-->
-            <!--android:visibility="gone"/>-->
+
+
+        <com.facebook.login.widget.LoginButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnFB"
+            android:visibility="gone"/>
 
     <Button
         android:id="@+id/btnFbLogin"
@@ -32,7 +38,7 @@
         android:layout_marginTop="50sp"
         android:layout_height="wrap_content"
         android:background="@drawable/customfbbtn"
-       android:layout_marginRight="20sp"
+        android:layout_marginRight="20sp"
         android:text="Facebook"
         android:textColor="#fff"
         android:textSize="15sp"
@@ -72,4 +78,5 @@
     android:layout_margin="20sp"
     android:background="@drawable/emailbutton"
     />
-</LinearLayout>
+    </LinearLayout>
+</FrameLayout>

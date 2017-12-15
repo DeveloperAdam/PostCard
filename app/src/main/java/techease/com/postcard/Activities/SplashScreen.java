@@ -36,16 +36,22 @@ public class SplashScreen extends AppCompatActivity {
                 }finally {
 
          //           getFragmentManager().beginTransaction().replace(R.id.SplashContainer,new SignUpFrag()).commit();
-                    String token=sharedPreferences.getString("token","");
-                    if (!token.equals(""))
+                    String emailToken,FbToken;
+                    emailToken=sharedPreferences.getString("token","");
+                    FbToken=sharedPreferences.getString("tokenFB","");
+                    if (!emailToken.equals(""))
                     {
                        Intent intent=new Intent(SplashScreen.this,FullscreenActivity.class);
-                       intent.putExtra("token",token);
+                       intent.putExtra("token",emailToken);
                        startActivity(intent);
 
+                    }else if (!FbToken.equals(""))
+                    {
+                        editor.putString("tokenFB",FbToken).commit();
+                        startActivity(new Intent(SplashScreen.this,FullscreenActivity.class));
+                        finish();
                     }
                     else
-
                     startActivity(new Intent(SplashScreen.this,Login.class));
                     finish();
 

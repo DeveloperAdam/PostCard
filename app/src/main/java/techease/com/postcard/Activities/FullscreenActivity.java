@@ -3,19 +3,24 @@ package techease.com.postcard.Activities;
 import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import techease.com.postcard.Fragments.CaptureImageFrag;
-import techease.com.postcard.Fragments.EmailLoginFrag;
 import techease.com.postcard.R;
 
 
 public class FullscreenActivity extends AppCompatActivity {
+
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
@@ -84,24 +89,35 @@ public class FullscreenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_fullscreen);
 //        Uncomment this two lines to open fragment for saving services in database
         // you can move that code to the service activity too
+
+        sharedPreferences =getSharedPreferences("com.postcard", MODE_PRIVATE);
+        editor = sharedPreferences.edit();
         Intent intent=getIntent();
-        String token=intent.getStringExtra("token");
-        if (token.equals(""))
+       // String token=intent.getStringExtra("token");
+        String token="abc";
+        String tokenFb=sharedPreferences.getString("tokenFB","");
+        if (!token.equals(""))
         {
-            Fragment fragment = new EmailLoginFrag();
-            getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+            //1026931
+            Fragment fragment = new CaptureImageFrag();
+            getFragmentManager().beginTransaction().replace(R.id.container, fragment).addToBackStack("abc").commit();
         }
         else
-        {
+            if(!tokenFb.equals(""))
+            {
+                Fragment fragment = new CaptureImageFrag();
+                getFragmentManager().beginTransaction().replace(R.id.container, fragment).addToBackStack("abc").commit();
+            }
+            else {
+               startActivity(new Intent(FullscreenActivity.this,Login.class));
+               finish();
 
-            Fragment fragment=new CaptureImageFrag();
-            getFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
-        }
-
+            }
 // uncomment the below line and comment the above lines and run
 //        startActivity(new Intent(FullscreenActivity.this, ServiceActivity.class));
         mVisible = true;
@@ -129,8 +145,8 @@ public class FullscreenActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(FullscreenActivity.this,Login.class));
-        finish();
+      //  startActivity(new Intent(FullscreenActivity.this,Login.class));
+       // finish();
     }
 
     private void hide() {

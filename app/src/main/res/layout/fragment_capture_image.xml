@@ -35,6 +35,16 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="33dp"
             android:background="@drawable/btnripple" />
+
+        <Button
+           android:id="@+id/btnLogout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/btnPicChooser"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="29dp"
+            android:background="@color/colorPrimary"
+            android:text="Logout" />
     </RelativeLayout>
 
 </FrameLayout>

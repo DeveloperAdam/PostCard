@@ -28,6 +28,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import techease.com.postcard.Activities.Login;
 import techease.com.postcard.R;
 
 import static android.app.Activity.RESULT_OK;
@@ -37,7 +38,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class CaptureImageFrag extends Fragment {
 
     ImageView imageView;
-    Button btnChoose;
+    Button btnChoose,btnLogout;
     String SaveImage;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
@@ -49,17 +50,35 @@ public class CaptureImageFrag extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_capture_image, container, false);
 
+        //getHasKey();
+
         //Declaration
         imageView = (ImageView) view.findViewById(R.id.iv);
         btnChoose = (Button) view.findViewById(R.id.btnPicChooser);
         sharedPreferences = getActivity().getSharedPreferences("com.postcard", MODE_PRIVATE);
         editor = sharedPreferences.edit();
         tvNext=(TextView)view.findViewById(R.id.tvNext);
+        btnLogout=(Button)view.findViewById(R.id.btnLogout);
+
         tvNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Fragment fragment=new AddingTextAndSign();
-                getActivity().getFragmentManager().beginTransaction().replace(R.id.container,fragment).addToBackStack("ava").commit();
+                getActivity().getFragmentManager().beginTransaction().replace(R.id.container,fragment).addToBackStack("hgdh").commit();
+            }
+        });
+
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Boolean temp=false;
+                Boolean temp2=false;
+                editor.putBoolean("token",temp);
+                editor.putBoolean("Fbtoken",temp2);
+                editor.commit();
+                startActivity(new Intent(getActivity(), Login.class));
+                getActivity().finish();
+
             }
         });
 
@@ -142,7 +161,7 @@ public class CaptureImageFrag extends Fragment {
                             .getExternalStorageDirectory()
                             + File.separator
                             + "Phoenix" + File.separator + "default";
-                    f.delete();
+                   // f.delete();
                     OutputStream outFile = null;
                     File file = new File(path, String.valueOf(System.currentTimeMillis()) + ".jpg");
                     outFile = new FileOutputStream(file);
@@ -165,18 +184,6 @@ public class CaptureImageFrag extends Fragment {
                     stream = getActivity().getContentResolver().openInputStream(data.getData());
                     Bitmap realImage = BitmapFactory.decodeStream(stream);
                     imageView.setImageBitmap(realImage);
-//
-//                    Uri selectImageUri=data.getData();
-//                    String[] filePathColum={MediaStore.Images.Media.DATA};
-//                    Cursor cursor =getActivity(). getContentResolver().query(selectImageUri,filePathColum, null, null, null);
-//                    cursor.moveToFirst();
-//                    int columnIndex = cursor.getColumnIndex(filePathColum[0]);
-//                    String picturePath = cursor.getString(columnIndex);
-//                    cursor.close();
-//                    Bitmap bmp = BitmapFactory.decodeFile(picturePath);
-//                    ByteArrayOutputStream streams = new ByteArrayOutputStream();
-//                    bmp.compress(Bitmap.CompressFormat.PNG, 100, streams);
-
                     SharedPreferences myPrefrence = getActivity().getPreferences(MODE_PRIVATE);
                     SharedPreferences.Editor editor = myPrefrence.edit();
                     editor.putString("imagePreferance", encodeToBase64(realImage));
@@ -185,29 +192,33 @@ public class CaptureImageFrag extends Fragment {
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
-//            {
-//                Uri selectedImage = data.getData();
-//
-//                String[] filePath = { MediaStore.Images.Media.DATA };
-//
-//                Cursor c = getActivity().getContentResolver().query(selectedImage,filePath, null, null, null);
-//
-//                c.moveToFirst();
-//
-//                int columnIndex = c.getColumnIndex(filePath[0]);
-//
-//                String picturePath = c.getString(columnIndex);
-//
-//                c.close();
-//
-//                Bitmap thumbnail = (BitmapFactory.decodeFile(picturePath));
-//
-//                Log.w("path of image galley", picturePath+"");
-//
-//                imageView.setImageBitmap(thumbnail);
             }
         }
     }
+
+    //Method for generating keyhash value
+//    void getHasKey()
+//    {
+//        //Get Has Key
+//        try
+//        {
+//            PackageInfo info = getActivity().getPackageManager().getPackageInfo("techease.com.postcard", PackageManager.GET_SIGNATURES);
+//            for (Signature signature : info.signatures)
+//            {
+//                MessageDigest md = MessageDigest.getInstance("SHA");
+//                md.update(signature.toByteArray());
+//                Log.e("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+//            }
+//        }
+//        catch (PackageManager.NameNotFoundException e)
+//        {
+//            e.printStackTrace();
+//        }
+//        catch (Exception e)
+//        {
+//            e.printStackTrace();
+//        }
+//    }
     public static String encodeToBase64(Bitmap image) {
         Bitmap immage = image;
         ByteArrayOutputStream baos = new ByteArrayOutputStream();

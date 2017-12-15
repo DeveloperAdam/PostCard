@@ -110,8 +110,8 @@ public class EmailLoginFrag extends Fragment {
             public void onResponse(String response) {
                 Log.d("zma respoonse", response);
                 //  DialogUtils.sweetAlertDialog.dismiss();
-                String localToken="abc123";
-                editor.putString("token",localToken);
+                String token="token";
+                editor.putString("token",token);
                 editor.commit();
                 Fragment fragment=new CaptureImageFrag();
                 getActivity().getFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
