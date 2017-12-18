@@ -1,0 +1,110 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#fff"
+    tools:context="techease.com.postcard.Fragments.AddressFrag">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="70sp"
+        android:text="ADDRESS"
+        android:id="@+id/tvAddress"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:textColor="@color/colorPrimary"
+        android:gravity="center"/>
+
+
+    <com.hbb20.CountryCodePicker
+    android:layout_width="match_parent"
+    android:layout_height="50sp"
+        android:background="@drawable/edittext_back"
+    android:id="@+id/spinerrCountry"
+    android:layout_marginTop="5sp"
+    >
+
+</com.hbb20.CountryCodePicker>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:layout_marginTop="10sp"
+        android:id="@+id/etFName"
+        android:hint="Full name"
+        android:paddingLeft="20sp"
+        android:background="@drawable/edittext_back"
+        android:layout_marginLeft="10sp"
+        android:layout_marginRight="10sp"
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:id="@+id/etStreet"
+        android:paddingLeft="20sp"
+        android:hint="Street and number,P.O.box,c/o."
+        android:background="@drawable/edittext_back"
+        android:layout_marginLeft="10sp"
+        android:layout_marginRight="10sp"
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:paddingLeft="20sp"
+        android:id="@+id/etApartment"
+        android:background="@drawable/edittext_back"
+        android:hint="Apartment,suite,building,floor etc."
+        android:layout_marginLeft="10sp"
+        android:layout_marginRight="10sp"
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:id="@+id/etCity"
+        android:paddingLeft="20sp"
+        android:hint="City"
+        android:background="@drawable/edittext_back"
+        android:layout_marginLeft="10sp"
+        android:layout_marginRight="10sp"
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:id="@+id/etState"
+        android:paddingLeft="20sp"
+        android:hint="State / Province / Region"
+        android:background="@drawable/edittext_back"
+        android:layout_marginLeft="10sp"
+        android:layout_marginRight="10sp"
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:id="@+id/etZipCode"
+        android:paddingLeft="20sp"
+        android:hint="Zip"
+        android:background="@drawable/edittext_back"
+        android:layout_marginLeft="10sp"
+        android:layout_marginRight="10sp"
+        />
+
+    <Button
+        android:id="@+id/btnConfirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btnripple"
+        android:text="Confirm"
+        android:layout_marginTop="20sp"
+        android:layout_gravity="center|bottom"
+        android:textColor="#fff" />
+    </LinearLayout>
+    </ScrollView>
+</LinearLayout>

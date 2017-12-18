@@ -28,7 +28,6 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import techease.com.postcard.Activities.Login;
 import techease.com.postcard.R;
 
 import static android.app.Activity.RESULT_OK;
@@ -39,7 +38,7 @@ public class CaptureImageFrag extends Fragment {
 
     ImageView imageView;
     Button btnChoose,btnLogout;
-    String SaveImage;
+    String SaveImageG,SaveImageT;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     TextView tvNext;
@@ -71,24 +70,28 @@ public class CaptureImageFrag extends Fragment {
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Boolean temp=false;
-                Boolean temp2=false;
-                editor.putBoolean("token",temp);
-                editor.putBoolean("Fbtoken",temp2);
+                editor.putString("token","");
+                editor.putString("tokenFB","");
                 editor.commit();
-                startActivity(new Intent(getActivity(), Login.class));
-                getActivity().finish();
+                Fragment fragment=new LoginFrag();
+                getFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
 
             }
         });
 
         SharedPreferences myPrefrence = getActivity().getPreferences(MODE_PRIVATE);
-        SaveImage=myPrefrence.getString("imagePreferance","");
-        Bitmap bitmap;
-        if(!SaveImage.equals(""))
+        SaveImageG=myPrefrence.getString("imagePreferance","");
+        SaveImageT=myPrefrence.getString("takepic","");
+        Bitmap bitmap,bitmap1;
+        if(!SaveImageG.equals(""))
         {
-            bitmap=decodeToBase64(SaveImage);
+            bitmap=decodeToBase64(SaveImageG);
             imageView.setImageBitmap(bitmap);
+        }
+        else if (!SaveImageT.equals(""))
+        {
+            bitmap1=decodeToBase64(SaveImageT);
+            imageView.setImageBitmap(bitmap1);
         }
         //When button clicked
         btnChoose.setOnClickListener(new View.OnClickListener() {
@@ -154,9 +157,10 @@ public class CaptureImageFrag extends Fragment {
 
                     bitmap = BitmapFactory.decodeFile(f.getAbsolutePath(),
                             bitmapOptions);
-
+                    editor.putString("takepic",f.getAbsolutePath());
                     imageView.setImageBitmap(bitmap);
 
+                    editor.putString("takepic",encodeToBase64(bitmap)).commit();
                     String path = android.os.Environment
                             .getExternalStorageDirectory()
                             + File.separator
@@ -166,8 +170,7 @@ public class CaptureImageFrag extends Fragment {
                     File file = new File(path, String.valueOf(System.currentTimeMillis()) + ".jpg");
                     outFile = new FileOutputStream(file);
 
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 85, outFile);
-
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 90, outFile);
                     outFile.flush();
 
                     outFile.close();

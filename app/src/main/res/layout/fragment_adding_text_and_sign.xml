@@ -1,10 +1,11 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="techease.com.postcard.Fragments.AddingTextAndSign">
 
-   <RelativeLayout
+   <LinearLayout
        android:layout_width="match_parent"
        android:layout_height="match_parent"
        android:orientation="vertical">
@@ -15,11 +16,10 @@
            android:scaleType="fitXY"
            android:background="#eee"
            />
-
        <EditText
            android:id="@+id/editText"
            android:layout_width="match_parent"
-           android:layout_height="200sp"
+           android:layout_height="180sp"
            android:layout_above="@+id/view"
            android:layout_alignParentStart="true"
            android:layout_marginBottom="11dp"
@@ -27,16 +27,57 @@
            android:ems="10"
            android:gravity="top"
            android:inputType="textMultiLine" />
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:gravity="center"
+           android:orientation="horizontal">
+           <Button
+               android:id="@+id/getsign"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="save"
+               android:background="@drawable/btnripple"
+               tools:ignore="ButtonStyle"
+               android:textColor="@android:color/black"
+               />
 
+           <Button
+               android:id="@+id/clear"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="clear"
+               android:layout_marginLeft="5sp"
+               android:background="@drawable/btnripple"
+               android:textColor="@android:color/black"
+               tools:ignore="ButtonStyle" />
+           <Button
+               android:id="@+id/cancel"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="Next"
+               android:layout_marginLeft="5sp"
+               android:background="@drawable/btnripple"
+               tools:ignore="ButtonStyle"
+               android:textColor="@android:color/black"
+               />
+       </LinearLayout>
        <View
            android:layout_width="match_parent"
            android:layout_height="2sp"
            android:layout_alignParentBottom="true"
            android:layout_alignParentStart="true"
-           android:layout_marginBottom="85dp"
+           android:layout_marginBottom="5dp"
            android:background="#eee"
            android:id="@+id/view" />
 
-   </RelativeLayout>
+       <LinearLayout
+           android:id="@+id/canvasLayout"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:orientation="vertical">
+       </LinearLayout>
 
-</FrameLayout>
+   </LinearLayout>
+
+</LinearLayout>

@@ -2,7 +2,6 @@ package techease.com.postcard.Activities;
 
 import android.annotation.SuppressLint;
 import android.app.Fragment;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,7 +12,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
-import techease.com.postcard.Fragments.CaptureImageFrag;
+import techease.com.postcard.Fragments.LoginFrag;
 import techease.com.postcard.R;
 
 
@@ -97,27 +96,29 @@ public class FullscreenActivity extends AppCompatActivity {
 
         sharedPreferences =getSharedPreferences("com.postcard", MODE_PRIVATE);
         editor = sharedPreferences.edit();
-        Intent intent=getIntent();
-       // String token=intent.getStringExtra("token");
-        String token="abc";
-        String tokenFb=sharedPreferences.getString("tokenFB","");
-        if (!token.equals(""))
-        {
-            //1026931
-            Fragment fragment = new CaptureImageFrag();
-            getFragmentManager().beginTransaction().replace(R.id.container, fragment).addToBackStack("abc").commit();
-        }
-        else
-            if(!tokenFb.equals(""))
-            {
-                Fragment fragment = new CaptureImageFrag();
-                getFragmentManager().beginTransaction().replace(R.id.container, fragment).addToBackStack("abc").commit();
-            }
-            else {
-               startActivity(new Intent(FullscreenActivity.this,Login.class));
-               finish();
 
-            }
+        Fragment loginFrag=new LoginFrag();
+        getFragmentManager().beginTransaction().replace(R.id.container,loginFrag).commit();
+
+//        String token=sharedPreferences.getString("token","");
+//        String tokenFb=sharedPreferences.getString("tokenFB","");
+//
+//        if (!token.equals(""))
+//        {
+//            Fragment fragment = new CaptureImageFrag();
+//            getFragmentManager().beginTransaction().replace(R.id.container, fragment).addToBackStack("abc").commit();
+//        }
+//        else
+//            if(!tokenFb.equals(""))
+//            {
+//                Fragment fragment = new CaptureImageFrag();
+//                getFragmentManager().beginTransaction().replace(R.id.container, fragment).addToBackStack("abc").commit();
+//            }
+//            else {
+//               startActivity(new Intent(FullscreenActivity.this,Login.class));
+//               finish();
+//
+//            }
 // uncomment the below line and comment the above lines and run
 //        startActivity(new Intent(FullscreenActivity.this, ServiceActivity.class));
         mVisible = true;
