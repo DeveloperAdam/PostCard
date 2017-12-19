@@ -2,6 +2,7 @@ package techease.com.postcard.Fragments;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -24,9 +25,7 @@ import android.widget.Toast;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.io.OutputStream;
 
 import techease.com.postcard.R;
 
@@ -37,12 +36,13 @@ import static android.content.Context.MODE_PRIVATE;
 public class CaptureImageFrag extends Fragment {
 
     ImageView imageView;
-    Button btnChoose,btnLogout;
-    String SaveImageG,SaveImageT;
+    Button btnChoose, btnLogout;
+    String SaveImageG, SaveImageT;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     TextView tvNext;
     private int PICK_IMAGE_REQUEST = 2;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -56,14 +56,14 @@ public class CaptureImageFrag extends Fragment {
         btnChoose = (Button) view.findViewById(R.id.btnPicChooser);
         sharedPreferences = getActivity().getSharedPreferences("com.postcard", MODE_PRIVATE);
         editor = sharedPreferences.edit();
-        tvNext=(TextView)view.findViewById(R.id.tvNext);
-        btnLogout=(Button)view.findViewById(R.id.btnLogout);
+        tvNext = (TextView) view.findViewById(R.id.tvNext);
+        btnLogout = (Button) view.findViewById(R.id.btnLogout);
 
         tvNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment=new AddingTextAndSign();
-                getActivity().getFragmentManager().beginTransaction().replace(R.id.container,fragment).addToBackStack("hgdh").commit();
+                Fragment fragment = new AddingTextAndSign();
+                getActivity().getFragmentManager().beginTransaction().replace(R.id.container, fragment).addToBackStack("hgdh").commit();
             }
         });
 
@@ -71,27 +71,24 @@ public class CaptureImageFrag extends Fragment {
             @Override
             public void onClick(View v) {
 
-                String logout="logout";
-                editor.putString("token",logout);
+                String logout = "logout";
+                editor.putString("token", logout);
                 editor.commit();
-                Fragment fragment=new LoginFrag();
-                getFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
+                Fragment fragment = new LoginFrag();
+                getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
 
             }
         });
 
         SharedPreferences myPrefrence = getActivity().getPreferences(MODE_PRIVATE);
-        SaveImageG=myPrefrence.getString("imagePreferance","");
-        SaveImageT=myPrefrence.getString("takepic","");
-        Bitmap bitmap,bitmap1;
-        if(!SaveImageG.equals(""))
-        {
-            bitmap=decodeToBase64(SaveImageG);
+        SaveImageG = myPrefrence.getString("imagePreferance", "");
+        SaveImageT = myPrefrence.getString("takepic", "");
+        Bitmap bitmap, bitmap1;
+        if (!SaveImageG.equals("")) {
+            bitmap = decodeToBase64(SaveImageG);
             imageView.setImageBitmap(bitmap);
-        }
-        else if (!SaveImageT.equals(""))
-        {
-            bitmap1=decodeToBase64(SaveImageT);
+        } else if (!SaveImageT.equals("")) {
+            bitmap1 = decodeToBase64(SaveImageT);
             imageView.setImageBitmap(bitmap1);
         }
         //When button clicked
@@ -158,30 +155,16 @@ public class CaptureImageFrag extends Fragment {
 
                     bitmap = BitmapFactory.decodeFile(f.getAbsolutePath(),
                             bitmapOptions);
-                    editor.putString("takepic",f.getAbsolutePath());
                     imageView.setImageBitmap(bitmap);
+                    getActivity().getSharedPreferences("com.postcard", Context.MODE_PRIVATE).edit().remove("takepic").commit();
+                    editor.putString("takepic", f.getAbsolutePath()).commit();
+                    Log.d("zma camera pic abs", f.getAbsolutePath().toString());
+                    Log.d("zma camera pic abs2", sharedPreferences.getString("takepic", ""));
 
-                    editor.putString("takepic",encodeToBase64(bitmap)).commit();
-                    String path = android.os.Environment
-                            .getExternalStorageDirectory()
-                            + File.separator
-                            + "Phoenix" + File.separator + "default";
-                   // f.delete();
-                    OutputStream outFile = null;
-                    File file = new File(path, String.valueOf(System.currentTimeMillis()) + ".jpg");
-                    outFile = new FileOutputStream(file);
-
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 90, outFile);
-                    outFile.flush();
-
-                    outFile.close();
-                }
-
-                catch (Exception e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
-            }else  if (requestCode==PICK_IMAGE_REQUEST)
-            {
+            } else if (requestCode == PICK_IMAGE_REQUEST) {
                 InputStream stream;
                 try {
                     Toast.makeText(getActivity(), "Image saved", Toast.LENGTH_SHORT).show();
@@ -190,8 +173,11 @@ public class CaptureImageFrag extends Fragment {
                     imageView.setImageBitmap(realImage);
                     SharedPreferences myPrefrence = getActivity().getPreferences(MODE_PRIVATE);
                     SharedPreferences.Editor editor = myPrefrence.edit();
-                    editor.putString("imagePreferance", encodeToBase64(realImage));
-                    editor.commit();
+                 //   getActivity().getSharedPreferences("com.postcard", Context.MODE_PRIVATE).edit().remove("takepic").commit();
+
+                    editor.putString("takepic", encodeToBase64(realImage)).commit();
+                    editor.putBoolean("gallery", true).commit();
+                    Log.d("zma gallery shrdpref", myPrefrence.getString("takepic", ""));
 
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
