@@ -45,8 +45,11 @@ dependencies {
     compile 'com.github.Mariovc:ImagePicker:1.1.1'
     compile 'com.github.barteksc:android-pdf-viewer:2.0.3'
     compile 'com.itextpdf:itextpdf:5.5.10'
+    compile 'com.github.zomato:androidphotofilters:1.0.1'
     compile 'com.hbb20:ccp:2.1.1'
     compile 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
     compile 'com.joanzapata.pdfview:android-pdfview:1.0.4@aar'
+    compile 'com.github.ksoichiro:android-observablescrollview:1.5.2'
+
 }
 apply plugin: 'com.google.gms.google-services'

@@ -21,6 +21,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.zomato.photofilters.imageprocessors.Filter;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -52,12 +54,16 @@ public class CaptureImageFrag extends Fragment {
         //getHasKey();
 
         //Declaration
+
+
         imageView = (ImageView) view.findViewById(R.id.iv);
         btnChoose = (Button) view.findViewById(R.id.btnPicChooser);
         sharedPreferences = getActivity().getSharedPreferences("com.postcard", MODE_PRIVATE);
         editor = sharedPreferences.edit();
         tvNext=(TextView)view.findViewById(R.id.tvNext);
         btnLogout=(Button)view.findViewById(R.id.btnLogout);
+        Filter myFilter = new Filter();
+
 
         tvNext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -238,5 +244,7 @@ public class CaptureImageFrag extends Fragment {
         byte[] decodedByte = Base64.decode(input, 0);
         return BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
     }
+
+
 }
 
