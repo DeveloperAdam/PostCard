@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import techease.com.postcard.Fragments.CaptureImageFrag;
 import techease.com.postcard.Fragments.LoginFrag;
 import techease.com.postcard.R;
 
@@ -94,7 +95,7 @@ public class FullscreenActivity extends AppCompatActivity {
 
         sharedPreferences =getSharedPreferences("com.postcard", MODE_PRIVATE);
         editor = sharedPreferences.edit();
-        Fragment loginFrag=new LoginFrag();
+        Fragment loginFrag=new CaptureImageFrag();
             getFragmentManager().beginTransaction().replace(R.id.container,loginFrag).commit();
 
 //        String token=sharedPreferences.getString("token","");

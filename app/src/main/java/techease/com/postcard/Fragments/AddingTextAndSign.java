@@ -13,6 +13,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -98,16 +99,24 @@ public class AddingTextAndSign extends Fragment {
             file.mkdir();
         }
 
-        SharedPreferences myPrefrence = getActivity().getPreferences(MODE_PRIVATE);
-        image = myPrefrence.getString("imagePreferance", "");
-        image2 = myPrefrence.getString("takepic", "");
+        sharedPreferences = getActivity().getPreferences( MODE_PRIVATE);
+       SharedPreferences sharedPreferences2 = getActivity().getSharedPreferences("com.postcard", MODE_PRIVATE);
+        image = sharedPreferences.getString("takepic", "");
+        image2 = sharedPreferences2.getString("takepic", "");
+        boolean galleryPic = sharedPreferences2.getBoolean("gallery", false);
+        Log.d("zma sharedPref image", image2);
+
         Bitmap bitmap, bitmap1;
-        if (!image.equals("")) {
+        if (!image.equals("") && galleryPic) {
             bitmap = decodeToBase64(image);
+            Log.d("zma sharedPref if", image);
             imageView.setImageBitmap(bitmap);
         } else if (!image2.equals("")) {
-            bitmap1 = BitmapFactory.decodeFile(image2);
-            imageView.setImageBitmap(bitmap1);
+            Log.d("zma sharedPref else", image2);
+            File imgFile = new  File(image2);
+//            bitmap1 = BitmapFactory.decodeFile(image2);
+            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+            imageView.setImageBitmap(myBitmap);
         }
 
         //Applying font
@@ -146,9 +155,11 @@ public class AddingTextAndSign extends Fragment {
                 editTextLOngText.buildDrawingCache();
                 Bitmap bit=Bitmap.createBitmap(editTextLOngText.getDrawingCache());
                 String stringBit=BitMapToString(bit);
-
-              //  imageView.setImageBitmap(bit);
-                editor.putString("bit",stringBit).commit();
+                Uri path = Uri.parse("android.resource://your.package.name/" + bit);
+                String imgPath = path.toString();
+                Log.d("zma imgPath", imgPath);
+                imageView.setImageBitmap(bit);
+              //  editor.putString("bit",stringBit).commit();
                 Fragment fragment=new AddressFrag();
                 fragment.setArguments(bundle);
                 getFragmentManager().beginTransaction().replace(R.id.container,fragment).addToBackStack("Adf").commit();
