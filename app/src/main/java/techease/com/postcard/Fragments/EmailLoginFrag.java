@@ -110,6 +110,8 @@ public class EmailLoginFrag extends Fragment {
             public void onResponse(String response) {
                 Log.d("zma respoonse", response);
                 //  DialogUtils.sweetAlertDialog.dismiss();
+                String token="token";
+                editor.putString("token",token).commit();
                 Fragment fragment=new CaptureImageFrag();
                 getActivity().getFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
             }
@@ -127,14 +129,6 @@ public class EmailLoginFrag extends Fragment {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-//                if((!android.util.Patterns.EMAIL_ADDRESS.matcher(strUserNameEmail).matches()))
-//                {
-//                    params.put("identity", strUserNameEmail);
-//                    params.put("password", strPass);
-//                    Log.d("zma params", String.valueOf(params));
-//                    return checkParams(params);
-//                }else
-
                 params.put("identity", strUserNameEmail);
                 params.put("password", strPass);
                 Log.d("zma params", String.valueOf(params));

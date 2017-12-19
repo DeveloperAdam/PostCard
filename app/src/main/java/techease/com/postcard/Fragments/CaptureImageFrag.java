@@ -70,8 +70,9 @@ public class CaptureImageFrag extends Fragment {
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editor.putString("token","");
-                editor.putString("tokenFB","");
+
+                String logout="logout";
+                editor.putString("token",logout);
                 editor.commit();
                 Fragment fragment=new LoginFrag();
                 getFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();

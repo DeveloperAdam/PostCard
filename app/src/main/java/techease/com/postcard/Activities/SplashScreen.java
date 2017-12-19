@@ -35,25 +35,13 @@ public class SplashScreen extends AppCompatActivity {
                     e.printStackTrace();
                 }finally {
 
-         //           getFragmentManager().beginTransaction().replace(R.id.SplashContainer,new SignUpFrag()).commit();
-//                    String emailToken,FbToken;
-//                    emailToken=sharedPreferences.getString("token","");
-//                    FbToken=sharedPreferences.getString("tokenFB","");
-//                    if (!emailToken.equals(""))
-//                    {
-//                       Intent intent=new Intent(SplashScreen.this,FullscreenActivity.class);
-//                       intent.putExtra("token",emailToken);
-//                       startActivity(intent);
-//
-//                    }else if (!FbToken.equals(""))
-//                    {
-//                        editor.putString("tokenFB",FbToken).commit();
-//                        startActivity(new Intent(SplashScreen.this,FullscreenActivity.class));
-//                        finish();
-//                    }
-//                    else
-                    startActivity(new Intent(SplashScreen.this,FullscreenActivity.class));
-                    finish();
+                   // getHasKey();
+
+                        startActivity(new Intent(SplashScreen.this,FullscreenActivity.class));
+                        finish();
+
+
+
 
                 }
 
@@ -61,4 +49,28 @@ public class SplashScreen extends AppCompatActivity {
         };
         thread.start();
     }
+
+    //Method for generating keyhash value
+//    void getHasKey()
+//    {
+//        //Get Has Key
+//        try
+//        {
+//            PackageInfo info = getPackageManager().getPackageInfo("techease.com.postcard", PackageManager.GET_SIGNATURES);
+//            for (Signature signature : info.signatures)
+//            {
+//                MessageDigest md = MessageDigest.getInstance("SHA");
+//                md.update(signature.toByteArray());
+//                Log.e("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+//            }
+//        }
+//        catch (PackageManager.NameNotFoundException e)
+//        {
+//            e.printStackTrace();
+//        }
+//        catch (Exception e)
+//        {
+//            e.printStackTrace();
+//        }
+//    }
 }

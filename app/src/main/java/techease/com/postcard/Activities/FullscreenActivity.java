@@ -91,36 +91,24 @@ public class FullscreenActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_fullscreen);
-//        Uncomment this two lines to open fragment for saving services in database
-        // you can move that code to the service activity too
 
         sharedPreferences =getSharedPreferences("com.postcard", MODE_PRIVATE);
         editor = sharedPreferences.edit();
-
         Fragment loginFrag=new LoginFrag();
-        getFragmentManager().beginTransaction().replace(R.id.container,loginFrag).commit();
+            getFragmentManager().beginTransaction().replace(R.id.container,loginFrag).commit();
 
 //        String token=sharedPreferences.getString("token","");
-//        String tokenFb=sharedPreferences.getString("tokenFB","");
-//
-//        if (!token.equals(""))
+//        if(token.equals("logout"))
 //        {
-//            Fragment fragment = new CaptureImageFrag();
-//            getFragmentManager().beginTransaction().replace(R.id.container, fragment).addToBackStack("abc").commit();
+//            Fragment loginFrag=new LoginFrag();
+//            getFragmentManager().beginTransaction().replace(R.id.container,loginFrag).commit();
 //        }
 //        else
-//            if(!tokenFb.equals(""))
-//            {
-//                Fragment fragment = new CaptureImageFrag();
-//                getFragmentManager().beginTransaction().replace(R.id.container, fragment).addToBackStack("abc").commit();
-//            }
-//            else {
-//               startActivity(new Intent(FullscreenActivity.this,Login.class));
-//               finish();
-//
-//            }
-// uncomment the below line and comment the above lines and run
-//        startActivity(new Intent(FullscreenActivity.this, ServiceActivity.class));
+//        {
+//            Fragment fragment=new CaptureImageFrag();
+//            getFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
+//        }
+
         mVisible = true;
 
     }

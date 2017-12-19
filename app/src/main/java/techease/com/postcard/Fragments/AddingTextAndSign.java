@@ -31,6 +31,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
@@ -62,7 +63,7 @@ public class AddingTextAndSign extends Fragment {
     String pic_name = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
     String StoredPath = DIRECTORY + pic_name + ".png";
     ImageView signImage;
-
+    Bundle bundle;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -86,6 +87,7 @@ public class AddingTextAndSign extends Fragment {
         mClear.setOnClickListener(onButtonClick);
         mCancel.setOnClickListener(onButtonClick);
         mContent.setVisibility(View.VISIBLE);
+
 
         
 
@@ -133,17 +135,34 @@ public class AddingTextAndSign extends Fragment {
                     mSignature.save(views, StoredPath);
                     Toast.makeText(getApplicationContext(), "Successfully Saved", Toast.LENGTH_SHORT).show();
                     // Calling the same class
-                    getActivity().recreate();
+                   // getActivity().recreate();
                 }
 
             }
             else if (v==mCancel)
             {
+                //Converting text to image
+                editTextLOngText.setCursorVisible(false);
+                editTextLOngText.buildDrawingCache();
+                Bitmap bit=Bitmap.createBitmap(editTextLOngText.getDrawingCache());
+                String stringBit=BitMapToString(bit);
+
+              //  imageView.setImageBitmap(bit);
+                editor.putString("bit",stringBit).commit();
                 Fragment fragment=new AddressFrag();
+                fragment.setArguments(bundle);
                 getFragmentManager().beginTransaction().replace(R.id.container,fragment).addToBackStack("Adf").commit();
             }
         }
     };
+
+    public static String BitMapToString(Bitmap bitmap)
+    {
+        ByteArrayOutputStream baos=new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
+        byte[] arr = baos.toByteArray();
+        return Base64.encodeToString(arr, Base64.DEFAULT);
+    }
     public boolean isStoragePermissionGranted() {
         if (Build.VERSION.SDK_INT >= 23) {
             if (getApplicationContext().checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
@@ -188,6 +207,7 @@ public class AddingTextAndSign extends Fragment {
         private float lastTouchY;
         private final RectF dirtyRect = new RectF();
 
+
         public signature(Context context, AttributeSet attrs) {
             super(context, attrs);
             paint.setAntiAlias(true);
@@ -210,9 +230,11 @@ public class AddingTextAndSign extends Fragment {
 
                 // Convert the output file to Image such as .png
                 bitmap.compress(Bitmap.CompressFormat.PNG, 90, mFileOutStream);
-               editor.putString("imagePath",StoredPath).commit();
-                mContent.setVisibility(INVISIBLE);
-               signImage.setVisibility(VISIBLE);
+
+                bundle=new Bundle();
+                bundle.putString("imagePath",StoredPath);
+                editor.putString("imagePath",StoredPath).commit();
+
                 mFileOutStream.flush();
                 mFileOutStream.close();
 

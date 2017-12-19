@@ -1,6 +1,7 @@
 package techease.com.postcard.Fragments;
 
 import android.app.Fragment;
+import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -50,18 +51,32 @@ public class AddressFrag extends Fragment {
         etFname.setTypeface(typeface2);
         btnConfirm.setTypeface(typeface2);
 
+        String arg=getArguments().getString("imagePath");
+        final Bundle bundle=new Bundle();
+        bundle.putString("imagePath",arg);
+
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                //Converting text to image
+                etBuilding.setCursorVisible(false);
+                etBuilding.buildDrawingCache();
+                etCity.setCursorVisible(false);
+                etCity.buildDrawingCache();
+                Bitmap bit=Bitmap.createBitmap(etBuilding.getDrawingCache());
 
                 Fragment fragment=new PCardFrag();
+                fragment.setArguments(bundle);
                 getFragmentManager().beginTransaction().replace(R.id.container,fragment).addToBackStack("abkuh").commit();
 
             }
         });
 
+
+
         return view;
     }
+
 
 }
