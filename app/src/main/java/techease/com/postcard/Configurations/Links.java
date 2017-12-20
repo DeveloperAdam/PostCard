@@ -12,4 +12,5 @@ public class Links {
     public static String EmailForgetPass="http://techeasesol.com/postcard/PostCard_apis/forgotpassword";
     public static String  VerifyEmailForgetPassApi="http://techeasesol.com/postcard/PostCard_apis/forgot_code_verify";
     public static String SetNewPassApi="http://techeasesol.com/postcard/PostCard_apis/resetpassword";
+    public static String Shared="com.postcard";
 }

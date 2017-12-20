@@ -36,25 +36,32 @@ public class PCardFrag extends Fragment {
         sharedPreferences = getActivity().getSharedPreferences("com.postcard", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
-        //Picture
+        //Person Picture
         SharedPreferences myPrefrence = getActivity().getPreferences(MODE_PRIVATE);
-        String    image = myPrefrence.getString("imagePreferance", "");
+        String    image = myPrefrence.getString("takepic", "");
         Bitmap bitmap;
         if (!image.equals("")) {
             bitmap = decodeToBase64(image);
             ivImage.setImageBitmap(bitmap);
         }
 
-        //Signature
-        String sImage=getArguments().getString("imagePath");
-        Bitmap signBitmap=BitmapFactory.decodeFile(sImage);
-        ivSign.setImageBitmap(signBitmap);
+        //SignatureImage
+        String img=myPrefrence.getString("imagePath","");
+      //  Log.d("signa",img);
+        Bitmap bitmap1=BitmapFactory.decodeFile(img);
+        ivSign.setImageBitmap(bitmap1);
+//
+//        String sImage=getArguments().getString("imagePath");
+//        Bitmap signBitmap=BitmapFactory.decodeFile(sImage);
+//        ivSign.setImageBitmap(signBitmap);
 
 
-        //Message
-        String mImage=sharedPreferences.getString("bit","");
-        Bitmap messageBitmap=decodeToBase64(mImage);
-        ivMessage.setImageBitmap(messageBitmap);
+        //MessageImage
+        Bitmap mImage=getArguments().getParcelable("bit");
+//        Log.d("texty",mImage.toString());
+       // Bitmap messageBitmap=decodeToBase64(mImage);
+        ivMessage.setImageBitmap(mImage);
+
 
 
         return view;

@@ -22,13 +22,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.zomato.photofilters.imageprocessors.Filter;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
+import techease.com.postcard.Configurations.Links;
 import techease.com.postcard.R;
 
 import static android.app.Activity.RESULT_OK;
@@ -37,9 +36,9 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class CaptureImageFrag extends Fragment {
 
-    ImageView imageView;
+    ImageView PersonImage;
     Button btnChoose, btnLogout;
-    String SaveImageG, SaveImageT;
+    String strGalleryImage, strCameraImage;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     TextView tvNext;
@@ -54,21 +53,15 @@ public class CaptureImageFrag extends Fragment {
         //getHasKey();
 
         //Declaration
-
-
-        imageView = (ImageView) view.findViewById(R.id.iv);
+        PersonImage = (ImageView) view.findViewById(R.id.iv);
         btnChoose = (Button) view.findViewById(R.id.btnPicChooser);
         sharedPreferences = getActivity().getSharedPreferences("com.postcard", MODE_PRIVATE);
         editor = sharedPreferences.edit();
-<<<<<<< HEAD
         tvNext=(TextView)view.findViewById(R.id.tvNext);
         btnLogout=(Button)view.findViewById(R.id.btnLogout);
-        Filter myFilter = new Filter();
-
-=======
         tvNext = (TextView) view.findViewById(R.id.tvNext);
         btnLogout = (Button) view.findViewById(R.id.btnLogout);
->>>>>>> ea405aafe2b88169fb2b55ff6f1b102ca9aaf21c
+
 
         tvNext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,16 +84,19 @@ public class CaptureImageFrag extends Fragment {
             }
         });
 
+        //checking sharedprefrence
         SharedPreferences myPrefrence = getActivity().getPreferences(MODE_PRIVATE);
-        SaveImageG = myPrefrence.getString("imagePreferance", "");
-        SaveImageT = myPrefrence.getString("takepic", "");
+
+        boolean galleri=sharedPreferences.getBoolean("gallery",false);
+        strGalleryImage = myPrefrence.getString("image", "");
+        strCameraImage = myPrefrence.getString("image", "");
         Bitmap bitmap, bitmap1;
-        if (!SaveImageG.equals("")) {
-            bitmap = decodeToBase64(SaveImageG);
-            imageView.setImageBitmap(bitmap);
-        } else if (!SaveImageT.equals("")) {
-            bitmap1 = decodeToBase64(SaveImageT);
-            imageView.setImageBitmap(bitmap1);
+        if (!strGalleryImage.equals("") && galleri==true ) {
+            bitmap = decodeToBase64(strGalleryImage);
+            PersonImage.setImageBitmap(bitmap);
+        } else if (!strCameraImage.equals("")) {
+            bitmap1 = decodeToBase64(strCameraImage);
+            PersonImage.setImageBitmap(bitmap1);
         }
         //When button clicked
         btnChoose.setOnClickListener(new View.OnClickListener() {
@@ -166,11 +162,10 @@ public class CaptureImageFrag extends Fragment {
 
                     bitmap = BitmapFactory.decodeFile(f.getAbsolutePath(),
                             bitmapOptions);
-                    imageView.setImageBitmap(bitmap);
-                    getActivity().getSharedPreferences("com.postcard", Context.MODE_PRIVATE).edit().remove("takepic").commit();
-                    editor.putString("takepic", f.getAbsolutePath()).commit();
-                    Log.d("zma camera pic abs", f.getAbsolutePath().toString());
-                    Log.d("zma camera pic abs2", sharedPreferences.getString("takepic", ""));
+                    PersonImage.setImageBitmap(bitmap);
+                    getActivity().getSharedPreferences(Links.Shared, Context.MODE_PRIVATE).edit().remove("takepic").commit();
+                    editor.putString("image", f.getAbsolutePath()).commit();
+                    Log.d("zma camera pic abs", sharedPreferences.getString("image",""));
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -181,14 +176,14 @@ public class CaptureImageFrag extends Fragment {
                     Toast.makeText(getActivity(), "Image saved", Toast.LENGTH_SHORT).show();
                     stream = getActivity().getContentResolver().openInputStream(data.getData());
                     Bitmap realImage = BitmapFactory.decodeStream(stream);
-                    imageView.setImageBitmap(realImage);
+                    PersonImage.setImageBitmap(realImage);
                     SharedPreferences myPrefrence = getActivity().getPreferences(MODE_PRIVATE);
                     SharedPreferences.Editor editor = myPrefrence.edit();
                  //   getActivity().getSharedPreferences("com.postcard", Context.MODE_PRIVATE).edit().remove("takepic").commit();
 
-                    editor.putString("takepic", encodeToBase64(realImage)).commit();
+                    editor.putString("image", encodeToBase64(realImage)).commit();
                     editor.putBoolean("gallery", true).commit();
-                    Log.d("zma gallery shrdpref", myPrefrence.getString("takepic", ""));
+                    Log.d("zma gallery shrdpref", myPrefrence.getString("library", ""));
 
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
@@ -197,29 +192,6 @@ public class CaptureImageFrag extends Fragment {
         }
     }
 
-    //Method for generating keyhash value
-//    void getHasKey()
-//    {
-//        //Get Has Key
-//        try
-//        {
-//            PackageInfo info = getActivity().getPackageManager().getPackageInfo("techease.com.postcard", PackageManager.GET_SIGNATURES);
-//            for (Signature signature : info.signatures)
-//            {
-//                MessageDigest md = MessageDigest.getInstance("SHA");
-//                md.update(signature.toByteArray());
-//                Log.e("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
-//            }
-//        }
-//        catch (PackageManager.NameNotFoundException e)
-//        {
-//            e.printStackTrace();
-//        }
-//        catch (Exception e)
-//        {
-//            e.printStackTrace();
-//        }
-//    }
     public static String encodeToBase64(Bitmap image) {
         Bitmap immage = image;
         ByteArrayOutputStream baos = new ByteArrayOutputStream();

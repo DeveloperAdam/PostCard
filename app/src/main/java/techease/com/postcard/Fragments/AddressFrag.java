@@ -51,9 +51,13 @@ public class AddressFrag extends Fragment {
         etFname.setTypeface(typeface2);
         btnConfirm.setTypeface(typeface2);
 
-        String arg=getArguments().getString("imagePath");
+        Bitmap argText=getArguments().getParcelable("bit");
         final Bundle bundle=new Bundle();
-        bundle.putString("imagePath",arg);
+        bundle.putParcelable("bit",argText);
+//        Log.d("textBit",argSign);
+//        Bitmap argText=getArguments().getParcelable("bit");
+//        final  Bundle bundle1=new Bundle();
+//        bundle1.putParcelable("argText",argText);
 
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,7 +68,9 @@ public class AddressFrag extends Fragment {
                 etBuilding.buildDrawingCache();
                 etCity.setCursorVisible(false);
                 etCity.buildDrawingCache();
-                Bitmap bit=Bitmap.createBitmap(etBuilding.getDrawingCache());
+                etFname.setCursorVisible(false);
+                etFname.buildDrawingCache();
+                Bitmap etBuildingBit=Bitmap.createBitmap(etBuilding.getDrawingCache());
 
                 Fragment fragment=new PCardFrag();
                 fragment.setArguments(bundle);

@@ -13,7 +13,6 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
 import android.graphics.Typeface;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -29,7 +28,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
@@ -47,7 +45,7 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class AddingTextAndSign extends Fragment {
 
-    ImageView imageView;
+    ImageView personImage;
     EditText editTextLOngText;
     Typeface typeface;
     LinearLayout mContent;
@@ -56,15 +54,13 @@ public class AddingTextAndSign extends Fragment {
     signature mSignature;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
-    String image, image2;
+    String strGalleryImage, strCameraImage;
     Bitmap bitmap;
-    Button mClear, mGetSign, mCancel;
-    TextView btnNext;
+    Button mClear, mGetSign, btnNext;
     String DIRECTORY = Environment.getExternalStorageDirectory().getPath() + "/UserSignature/";
     String pic_name = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
     String StoredPath = DIRECTORY + pic_name + ".png";
-    ImageView signImage;
-    Bundle bundle;
+    Bundle bundle,bundle2;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -72,7 +68,7 @@ public class AddingTextAndSign extends Fragment {
         View view = inflater.inflate(R.layout.fragment_adding_text_and_sign, container, false);
 
         //Declaration
-        imageView = (ImageView) view.findViewById(R.id.ivAddingText);
+        personImage = (ImageView) view.findViewById(R.id.ivAddingText);
         editTextLOngText = (EditText) view.findViewById(R.id.editText);
         typeface = Typeface.createFromAsset(getActivity().getAssets(), "SanFrancisco.otf");
         mContent = (LinearLayout)view.findViewById(R.id.canvasLayout);
@@ -82,11 +78,11 @@ public class AddingTextAndSign extends Fragment {
         mClear = (Button) view.findViewById(R.id.clear);
         mGetSign = (Button)view. findViewById(R.id.getsign);
         mGetSign.setEnabled(false);
-        mCancel = (Button)view. findViewById(R.id.cancel);
+        btnNext = (Button)view. findViewById(R.id.cancel);
         views= mContent;
         mGetSign.setOnClickListener(onButtonClick);
         mClear.setOnClickListener(onButtonClick);
-        mCancel.setOnClickListener(onButtonClick);
+        btnNext.setOnClickListener(onButtonClick);
         mContent.setVisibility(View.VISIBLE);
 
 
@@ -99,24 +95,23 @@ public class AddingTextAndSign extends Fragment {
             file.mkdir();
         }
 
-        sharedPreferences = getActivity().getPreferences( MODE_PRIVATE);
+        SharedPreferences myPrefrence = getActivity().getPreferences(MODE_PRIVATE);
        SharedPreferences sharedPreferences2 = getActivity().getSharedPreferences("com.postcard", MODE_PRIVATE);
-        image = sharedPreferences.getString("takepic", "");
-        image2 = sharedPreferences2.getString("takepic", "");
+        strGalleryImage = myPrefrence.getString("Gimage", "");
+        strCameraImage = sharedPreferences2.getString("image", "");
         boolean galleryPic = sharedPreferences2.getBoolean("gallery", false);
-        Log.d("zma sharedPref image", image2);
+        Log.d("zma sharedPref image", strCameraImage);
 
-        Bitmap bitmap, bitmap1;
-        if (!image.equals("") && galleryPic) {
-            bitmap = decodeToBase64(image);
-            Log.d("zma sharedPref if", image);
-            imageView.setImageBitmap(bitmap);
-        } else if (!image2.equals("")) {
-            Log.d("zma sharedPref else", image2);
-            File imgFile = new  File(image2);
-//            bitmap1 = BitmapFactory.decodeFile(image2);
+        Bitmap bitmap;
+        if (!strGalleryImage.equals("") && galleryPic==true) {
+            bitmap = decodeToBase64(strGalleryImage);
+            Log.d("zma sharedPref if", strGalleryImage);
+            personImage.setImageBitmap(bitmap);
+        } else if (!strCameraImage.equals("")) {
+            Log.d("zma sharedPref else", strCameraImage);
+            File imgFile = new  File(strCameraImage);
             Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-            imageView.setImageBitmap(myBitmap);
+            personImage.setImageBitmap(myBitmap);
         }
 
         //Applying font
@@ -148,20 +143,22 @@ public class AddingTextAndSign extends Fragment {
                 }
 
             }
-            else if (v==mCancel)
+            else if (v==btnNext)
             {
                 //Converting text to image
                 editTextLOngText.setCursorVisible(false);
                 editTextLOngText.buildDrawingCache();
                 Bitmap bit=Bitmap.createBitmap(editTextLOngText.getDrawingCache());
-                String stringBit=BitMapToString(bit);
-                Uri path = Uri.parse("android.resource://your.package.name/" + bit);
-                String imgPath = path.toString();
-                Log.d("zma imgPath", imgPath);
-                imageView.setImageBitmap(bit);
+                personImage.setImageBitmap(bit);
+                bundle2=new Bundle();
+                bundle2.putParcelable("bit",bit);
+                Log.d("zma textBit",bit.toString());
               //  editor.putString("bit",stringBit).commit();
+
+
                 Fragment fragment=new AddressFrag();
-                fragment.setArguments(bundle);
+            //    fragment.setArguments(bundle);
+                fragment.setArguments(bundle2);
                 getFragmentManager().beginTransaction().replace(R.id.container,fragment).addToBackStack("Adf").commit();
             }
         }
@@ -242,8 +239,8 @@ public class AddingTextAndSign extends Fragment {
                 // Convert the output file to Image such as .png
                 bitmap.compress(Bitmap.CompressFormat.PNG, 90, mFileOutStream);
 
-                bundle=new Bundle();
-                bundle.putString("imagePath",StoredPath);
+//                bundle=new Bundle();
+//                bundle.putString("imagePath",StoredPath);
                 editor.putString("imagePath",StoredPath).commit();
 
                 mFileOutStream.flush();
@@ -338,4 +335,5 @@ public class AddingTextAndSign extends Fragment {
 
 
     }
+
 }

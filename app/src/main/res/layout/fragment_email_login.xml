@@ -81,14 +81,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Click Here"
-                android:textColor="#A1D7ED"
+                android:textColor="#1cb5e0"
                 android:textSize="17sp"
                 android:id="@+id/tvforgetPass"/>
         </LinearLayout>
         <View
             android:layout_width="match_parent"
             android:layout_height="2sp"
-           android:layout_marginTop="50sp"
+           android:layout_marginTop="60sp"
             android:background="#eee"/>
         <LinearLayout
             android:layout_width="match_parent"
@@ -107,7 +107,7 @@
                 android:layout_height="wrap_content"
                 android:text="Sign Up"
                 android:textSize="17sp"
-                android:textColor="#A1D7ED"/>
+                android:textColor="#1cb5e0"/>
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>

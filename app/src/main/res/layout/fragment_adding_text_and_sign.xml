@@ -24,6 +24,7 @@
            android:layout_alignParentStart="true"
            android:layout_marginBottom="11dp"
            android:padding="10sp"
+           android:hint="Write message here"
            android:background="@android:color/transparent"
            android:ems="10"
            android:gravity="top"
@@ -77,6 +78,11 @@
            android:layout_width="match_parent"
            android:layout_height="match_parent"
            android:orientation="vertical">
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="Sign Here"
+               android:padding="10sp"/>
        </LinearLayout>
 
    </LinearLayout>
